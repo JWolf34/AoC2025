@@ -23,17 +23,50 @@ def part1():
             pos = pos - (value % 100)
             if pos < 0:
                 pos += 100
-                
+
         if pos == 0:
             num_zero += 1
 
     print(num_zero)
 
-
-
-
 def part2():
-    pass
+    # Parse input
+    with open("day1/input.txt", 'r') as file:
+        turns = file.readlines()
+    
+    # Starts at 50
+    pos = 50
+    num_zero = 0
+
+    # Iterate over each turn
+    for turn in turns:
+        pos_started_at_0 = pos == 0
+        turn = turn.strip()
+        dir = turn[0]
+        value = int(turn[1:])
+        turn_passes_0 = value // 100
+
+        if dir == "R":
+            pos = pos + (value % 100)
+            if pos > 99:
+                pos -= 100
+                if pos != 0 and not pos_started_at_0:
+                    num_zero += 1
+
+        else:
+            pos = pos - (value % 100)
+            if pos < 0:
+                pos += 100
+                if pos != 0 and not pos_started_at_0:
+                    num_zero += 1
+                #turn_passes_0 -= 1
+                
+        if pos == 0:
+            num_zero += 1
+        
+        num_zero += turn_passes_0
+
+    print(num_zero)
 
 
 if __name__ == '__main__':
