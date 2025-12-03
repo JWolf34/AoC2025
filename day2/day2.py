@@ -36,20 +36,8 @@ def part2(input: list):
     def contains_repdigit(digit: int):
         digit = str(digit)
         
-        if digit == '111':
-            pass
-        
-        for i in range(0, len(digit)//2):
-            first_substr = digit[:i+1]
-            for j in range(i+1, len(digit)):
-                second_substr = digit[i+1:j+1]
-                if first_substr == second_substr:
-                    return True
-        
-        return False
-        
-        
-
+        i = (digit+digit).find(digit, 1, -1)
+        return False if i == -1 else True
 
     invalid_ids = []
     for id in input:
@@ -61,13 +49,12 @@ def part2(input: list):
             if contains_repdigit(i):
                 invalid_ids.append(i)
     
-    print(invalid_ids)
     print(sum(invalid_ids))
 
 
 def parse_input():
     # Parse input
-    with open("day2/test_input.txt", 'r') as file:
+    with open("day2/input.txt", 'r') as file:
         input = file.read()
         input = input.split(',')
     
