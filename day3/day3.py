@@ -27,10 +27,35 @@ def part1(input: list):
 
 
 def part2(input: list):
-    pass
+    from collections import defaultdict
+
+    jolts = []
+    for bank in input:
+        battery_jolts = []
+        battery_bank = [int(x) for x in bank.strip()]
+        batteries = list(battery_bank)
+        index_map = defaultdict(battery_bank)
+        for i in range(0, 12):
+            
+            jolt_value = max(index_map)
+            jolt_index = max(index_map[jolt_value])
+            index_map[jolt_value].remove(jolt_index)
+
+            if not index_map[jolt_value]:
+                index_map.pop(jolt_value)
+
+            jolt = {'value': jolt_value,
+                    'index': jolt_index}
+            battery_jolts.append(jolt)
+        
+        battery_jolts = sorted(battery_jolts, key= lambda jolt: jolt['index'])
+        jolts.append(int(''.join([str(jolt['value']) for jolt in battery_jolts])))
+
+    print(sum(jolts))
+        
 
 def parse_input():
-    with open("day3/input.txt", 'r') as file:
+    with open("day3/test_input.txt", 'r') as file:
         data = file.readlines()
     return data
 
