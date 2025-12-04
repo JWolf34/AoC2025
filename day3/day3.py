@@ -40,7 +40,7 @@ def part2(input: list):
         
 
 def parse_input():
-    with open("day3/input.txt", 'r') as file:
+    with open("day3/test_input.txt", 'r') as file:
         data = file.readlines()
     return data
 
