@@ -28,13 +28,41 @@ def part1(input: list):
 
 def part2(input: list):
     from itertools import combinations
+    from collections import defaultdict
 
     jolts = []
     for bank in input:
+
+        # We need 12 digits, so get the highest number in the first 4 digits
+        # Then we can find the biggest number of the remaining digits
+
         battery_jolts = []
         battery_bank = [x for x in bank.strip()]
-        combos = [int(''.join(x)) for x in combinations(battery_bank, 12)]
-        jolts.append(max(combos))
+        batteries = list(battery_bank)
+
+        first_digit = max(battery_bank[:4])
+        first_digit_index = battery_bank.index(first_digit)
+        batteries = batteries[first_digit_index+1:]
+
+        index_map = defaultdict(list)
+        for index, x in enumerate(batteries):
+            index_map[x].append(index)
+
+        for i in range(0, 11):
+            jolt_value = max(index_map)
+            jolt_index = max(index_map[jolt_value])
+
+            if not index_map[jolt_value]:
+                index_map.pop(jolt_value)
+
+            battery_jolts.append({"value": jolt_value,
+                                 "index":jolt_index})
+            
+        battery_jolts = sorted(battery_jolts, key=lambda battery: battery['index'])
+        jolts.append(int(first_digit + ''.join(x['value'] for x in battery_jolts)))
+
+        #combos = [int(''.join(x)) for x in combinations(batteries, 11)]
+        #jolts.append(int(str(first_digit) + str(max(combos))))
 
     print(sum(jolts))
         
