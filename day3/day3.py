@@ -33,9 +33,13 @@ def part2(input: list):
     for bank in input:
         battery_jolts = []
         battery_bank = [x for x in bank.strip()]
-        combos = [int(''.join(x)) for x in combinations(battery_bank, 12)]
-        jolts.append(max(combos))
+        print(battery_bank[:4])
+        first_jolt =  max([int(x) for x in battery_bank[:4]])
+        first_jolt_index = battery_bank.index(str(first_jolt))
+        jolt = int("".join(battery_bank[first_jolt_index:first_jolt_index+12]))
+        jolts.append(jolt)
 
+    print(jolts)
     print(sum(jolts))
         
 
