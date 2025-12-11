@@ -24,7 +24,7 @@ def getSession():
     return os.getenv("SESSION")
 
 if __name__ == "__main__":
-    DAY = 4
+    DAY = 5
     YEAR = 2025
     fetchInput(day= DAY, year= YEAR)
 
